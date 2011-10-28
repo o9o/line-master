@@ -1,0 +1,41 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>extra-resources/connection_24.png</file>
+        <file>extra-resources/connection.svg</file>
+        <file>extra-resources/connection_32.png</file>
+        <file>extra-resources/ftline_line_arrow_end.svg</file>
+        <file>extra-resources/ftline_line_arrow_end_24.png</file>
+        <file>extra-resources/ftline_line_arrow_end_32.png</file>
+        <file>extra-resources/juanjo_Router.svg</file>
+        <file>extra-resources/juanjo_Router_24.png</file>
+        <file>extra-resources/juanjo_Router_32.png</file>
+        <file>extra-resources/juanjo_Router_border.svg</file>
+        <file>extra-resources/juanjo_Router_border_24.png</file>
+        <file>extra-resources/juanjo_Router_border_32.png</file>
+        <file>extra-resources/juanjo_Router_gateway.svg</file>
+        <file>extra-resources/juanjo_Router_gateway_24.png</file>
+        <file>extra-resources/juanjo_Router_gateway_32.png</file>
+        <file>extra-resources/rgtaylor_csc_net_computer.svg</file>
+        <file>extra-resources/rgtaylor_csc_net_computer_24.png</file>
+        <file>extra-resources/rgtaylor_csc_net_computer_32.png</file>
+        <file>extra-resources/connection_delete.svg</file>
+        <file>extra-resources/connection_delete_32.png</file>
+        <file>extra-resources/connection_delete_24.png</file>
+        <file>extra-resources/move_24.png</file>
+        <file>extra-resources/link_edit_24.png</file>
+        <file>extra-resources/link_delete_24.png</file>
+        <file>extra-resources/delete_node_24.png</file>
+        <file>extra-resources/drag_24.png</file>
+        <file>extra-resources/stylesheet-branch-closed.png</file>
+        <file>extra-resources/stylesheet-branch-open.png</file>
+        <file>extra-resources/document-new.png</file>
+        <file>extra-resources/document-open.png</file>
+        <file>extra-resources/document-save.png</file>
+        <file>extra-resources/document-save-as.png</file>
+        <file>extra-resources/green_redo.png</file>
+        <file>extra-resources/stock_search.png</file>
+    </qresource>
+    <qresource prefix="/css">
+        <file>style.css</file>
+    </qresource>
+</RCC>
