@@ -594,7 +594,7 @@ void* packet_scheduler_thread(void* )
 	quint64 packetsQdropped = 0;
 	while (1) {
 		if (do_shutdown) {
-			printf("Scheduler loop took: avg "TS_FORMAT", max "TS_FORMAT"\n", TS_FORMAT_PARAM(total_loop_delay / total_loops), TS_FORMAT_PARAM(max_loop_delay));
+            printf("Scheduler non-idle loop time:\nAverage "TS_FORMAT", Max "TS_FORMAT"\n", TS_FORMAT_PARAM(total_loop_delay / total_loops), TS_FORMAT_PARAM(max_loop_delay));
 			break;
 		}
 
@@ -656,8 +656,10 @@ void* packet_scheduler_thread(void* )
 		// begin stats
 		quint64 ts_after = get_current_time();
 		max_loop_delay = qMax(max_loop_delay, ts_after - ts_now);
-		total_loop_delay += ts_after - ts_now;
-		total_loops++;
+        if (receivedPackets || receivedEvents) {
+            total_loop_delay += ts_after - ts_now;
+            total_loops++;
+        }
 		// end stats
 
 #if BUSY_WAITING

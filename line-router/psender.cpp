@@ -310,7 +310,6 @@ void send_packet(int fd_send, Packet *p)
 
 	if (errPercent >= 10) {
 		packetsSentErr10p++;
-		printf("Packet theor.delay = "TS_FORMAT", actual delay = "TS_FORMAT", error = "TS_FORMAT" (%llu%%)\n", TS_FORMAT_PARAM(p->theoretical_delay), TS_FORMAT_PARAM(p->ts_send - p->ts_userspace_rx), TS_FORMAT_PARAM(err), errPercent);
 	}
 
 	if (errPercent >= 25) {
