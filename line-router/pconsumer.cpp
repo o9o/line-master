@@ -141,8 +141,8 @@ void* packet_consumer_thread(void* ) {
     quint64 ts_end = get_current_time();
 
 	printf("Total packets received: %llu\n", packetsReceived);
-    printf("Packets received per second: %f pps\n", 1.0e9 * packetsReceived / double(ts_end - tsFirstReceivedPacket));
-    printf("Bits received per second: %f bps\n", 1.0e9 * bytesReceived * 8.0 / double(ts_end - tsFirstReceivedPacket));
+    printf("Packets received per second: %f kpps\n", 1.0e6 * packetsReceived / double(ts_end - tsFirstReceivedPacket));
+    printf("Bits received per second: %f Mbps\n", 1.0e3 * bytesReceived * 8.0 / double(ts_end - tsFirstReceivedPacket));
 
 	return(NULL);
 }
