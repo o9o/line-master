@@ -216,7 +216,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 						emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(key));
 					}
 
-                    if (!ssh.waitForFinished(key, 1)) {
+                    if (!ssh.waitForFinished(key, 0)) {
 						emit logError(ui->txtBatch, QString("Error: %1 wait failed after SIGINT; trying SIGKILL").arg(key));
 					}
 
@@ -224,7 +224,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 						emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(key));
 					}
 
-                    if (!ssh.waitForFinished(key, 1)) {
+                    if (!ssh.waitForFinished(key, 0)) {
 						emit logError(ui->txtBatch, QString("Error: %1 wait failed").arg(key));
 					}
 				}
@@ -252,7 +252,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 						emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(key));
 					}
 
-                    if (!ssh.waitForFinished(key, 1)) {
+                    if (!ssh.waitForFinished(key, 0)) {
 						emit logError(ui->txtBatch, QString("Error: %1 wait failed after SIGINT; trying SIGKILL").arg(key));
 					}
 
@@ -260,7 +260,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 						emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(key));
 					}
 
-                    if (!ssh.waitForFinished(key, 1)) {
+                    if (!ssh.waitForFinished(key, 0)) {
 						emit logError(ui->txtBatch, QString("Error: %1 wait failed").arg(key));
 					}
 				}
@@ -269,7 +269,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 					emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(c.serverKey));
 				}
 
-                if (!ssh.waitForFinished(c.serverKey, 1)) {
+                if (!ssh.waitForFinished(c.serverKey, 0)) {
 					emit logError(ui->txtBatch, QString("Error: %1 wait failed after SIGINT; trying SIGKILL").arg(c.serverKey));
 				}
 
@@ -277,7 +277,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 					emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(c.serverKey));
 				}
 
-                if (!ssh.waitForFinished(c.serverKey, 1)) {
+                if (!ssh.waitForFinished(c.serverKey, 0)) {
 					emit logError(ui->txtBatch, QString("Error: %1 wait failed").arg(c.serverKey));
 				}
 			}
@@ -328,26 +328,26 @@ QString MainWindow::doGenericSimulation(int timeout)
 			foreach (QString key, c.clientKeys) {
 				QString fileName = fileNamePrefix + QString("_%1_client").arg(multiIndex);
 				QString result;
-				emit logInformation(ui->txtBatch, QString("STDOUT client %1:").arg(key));
+                // emit logInformation(ui->txtBatch, QString("STDOUT client %1:").arg(key));
 				result = ssh.readAllStdout(key);
-				emit logOutput(ui->txtBatch, result);
+                // emit logOutput(ui->txtBatch, result);
 				saveFile(fileName + ".out", result);
-				emit logInformation(ui->txtBatch, QString("STDERR client %1:").arg(key));
+                // emit logInformation(ui->txtBatch, QString("STDERR client %1:").arg(key));
 				result = ssh.readAllStderr(key);
-				emit logOutput(ui->txtBatch, result);
+                // emit logOutput(ui->txtBatch, result);
 				saveFile(fileName + ".err", result);
 				multiIndex++;
 			}
 		} else {
 			QString fileName = fileNamePrefix + QString("_0_client");
 			QString result;
-			emit logInformation(ui->txtBatch, QString("STDOUT client %1:").arg(c.clientKey));
+//			emit logInformation(ui->txtBatch, QString("STDOUT client %1:").arg(c.clientKey));
 			result = ssh.readAllStdout(c.clientKey);
-			emit logOutput(ui->txtBatch, result);
+//			emit logOutput(ui->txtBatch, result);
 			saveFile(fileName + ".out", result);
-			emit logInformation(ui->txtBatch, QString("STDERR client %1:").arg(c.clientKey));
+//			emit logInformation(ui->txtBatch, QString("STDERR client %1:").arg(c.clientKey));
 			result = ssh.readAllStderr(c.clientKey);
-			emit logOutput(ui->txtBatch, result);
+//			emit logOutput(ui->txtBatch, result);
 			saveFile(fileName + ".err", result);
 		}
 
@@ -356,26 +356,26 @@ QString MainWindow::doGenericSimulation(int timeout)
 			foreach (QString key, c.serverKeys) {
 				QString fileName = fileNamePrefix + QString("_%1_server").arg(multiIndex);
 				QString result;
-				emit logInformation(ui->txtBatch, QString("STDOUT server %1:").arg(key));
+//				emit logInformation(ui->txtBatch, QString("STDOUT server %1:").arg(key));
 				result = ssh.readAllStdout(key);
-				emit logOutput(ui->txtBatch, result);
+//				emit logOutput(ui->txtBatch, result);
 				saveFile(fileName + ".out", result);
-				emit logInformation(ui->txtBatch, QString("STDERR server %1:").arg(key));
+//				emit logInformation(ui->txtBatch, QString("STDERR server %1:").arg(key));
 				result = ssh.readAllStderr(key);
-				emit logOutput(ui->txtBatch, result);
+//				emit logOutput(ui->txtBatch, result);
 				saveFile(fileName + ".err", result);
 				multiIndex++;
 			}
 		} else {
 			QString fileName = fileNamePrefix + QString("_0_server");
 			QString result;
-			emit logInformation(ui->txtBatch, QString("STDOUT server %1:").arg(c.serverKey));
+//			emit logInformation(ui->txtBatch, QString("STDOUT server %1:").arg(c.serverKey));
 			result = ssh.readAllStdout(c.serverKey);
-			emit logOutput(ui->txtBatch, result);
+//			emit logOutput(ui->txtBatch, result);
 			saveFile(fileName + ".out", result);
-			emit logInformation(ui->txtBatch, QString("STDERR server %1:").arg(c.serverKey));
+//			emit logInformation(ui->txtBatch, QString("STDERR server %1:").arg(c.serverKey));
 			result = ssh.readAllStderr(c.serverKey);
-			emit logOutput(ui->txtBatch, result);
+//			emit logOutput(ui->txtBatch, result);
 			saveFile(fileName + ".err", result);
 		}
 	}
