@@ -203,6 +203,28 @@ QString MainWindow::doGenericSimulation(int timeout)
 		}
 	}
 
+    // stop emulator
+    emit logInformation(ui->txtBatch, QString("Stopping emulator (%1)").arg(emulatorKey));
+    if (!sshCore.signalProcess(emulatorKey, 2)) {
+        emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(emulatorKey));
+    }
+    if (!sshCore.waitForFinished(emulatorKey, -1)) {
+        emit logError(ui->txtBatch, QString("Error: %1 wait failed").arg(emulatorKey));
+    }
+    emit logInformation(ui->txtBatch, QString("Emulator output:"));
+    emit logOutput(ui->txtBatch, sshCore.readAllStdout(emulatorKey));
+    emit logOutput(ui->txtBatch, sshCore.readAllStderr(emulatorKey));
+
+    // save emulator output
+    {
+        QString key = sshCore.startProcess("cp", QStringList() << QString("%1.out").arg(emulatorKey) << QString("%1/emulator.out").arg(testId));
+        if (!sshCore.waitForFinished(key, -1))
+            emit logError(ui->txtBatch, QString("Error: could not copy emulator stdout"));
+        key = sshCore.startProcess("cp", QStringList() << QString("%1.err").arg(emulatorKey) << QString("%1/emulator.err").arg(testId));
+        if (!sshCore.waitForFinished(key, -1))
+            emit logError(ui->txtBatch, QString("Error: could not copy emulator stderr"));
+    }
+
 	// we need to kill client apps if (1) we are running with a timeout or (2) if the stop button was pressed
 	// we need to kill server apps in any case
 	// but there is no big problem if we try to kill them all anyways so...
@@ -378,28 +400,6 @@ QString MainWindow::doGenericSimulation(int timeout)
 //			emit logOutput(ui->txtBatch, result);
 			saveFile(fileName + ".err", result);
 		}
-	}
-
-	// stop emulator
-	emit logInformation(ui->txtBatch, QString("Stopping emulator (%1)").arg(emulatorKey));
-	if (!sshCore.signalProcess(emulatorKey, 2)) {
-		emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(emulatorKey));
-	}
-	if (!sshCore.waitForFinished(emulatorKey, -1)) {
-		emit logError(ui->txtBatch, QString("Error: %1 wait failed").arg(emulatorKey));
-	}
-	emit logInformation(ui->txtBatch, QString("Emulator output:"));
-	emit logOutput(ui->txtBatch, sshCore.readAllStdout(emulatorKey));
-	emit logOutput(ui->txtBatch, sshCore.readAllStderr(emulatorKey));
-
-	// save emulator output
-	{
-		QString key = sshCore.startProcess("cp", QStringList() << QString("%1.out").arg(emulatorKey) << QString("%1/emulator.out").arg(testId));
-		if (!sshCore.waitForFinished(key, -1))
-			emit logError(ui->txtBatch, QString("Error: could not copy emulator stdout"));
-		key = sshCore.startProcess("cp", QStringList() << QString("%1.err").arg(emulatorKey) << QString("%1/emulator.err").arg(testId));
-		if (!sshCore.waitForFinished(key, -1))
-			emit logError(ui->txtBatch, QString("Error: could not copy emulator stderr"));
 	}
 
 	// zip everything

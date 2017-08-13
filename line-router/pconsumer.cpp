@@ -72,6 +72,8 @@ void* packet_consumer_thread(void* ) {
 	}
 
 	quint64 packetsReceived = 0;
+    quint64 tsFirstReceivedPacket = 0;
+    quint64 bytesReceived = 0;
 
 	memset(&hdr, 0, sizeof(hdr));
 	p = new Packet();
@@ -105,7 +107,10 @@ void* packet_consumer_thread(void* ) {
 				    !(htonl(hdr.extended_hdr.parsed_pkt.ip_src.v4) & MODEL_FORCEBIT)) {
 					if (DEBUG_PACKETS) printf("Accepted packet %d.%d.%d.%d -> %d.%d.%d.%d\n", HIPQUAD(hdr.extended_hdr.parsed_pkt.ip_src.v4), HIPQUAD(hdr.extended_hdr.parsed_pkt.ip_dst.v4));
 					packetsReceived++;
-					quint64 ts_now = get_current_time();
+                    bytesReceived += hdr.len;
+                    quint64 ts_now = get_current_time();
+                    if (tsFirstReceivedPacket == 0)
+                        tsFirstReceivedPacket = ts_now;
 #if PROFILE_PCONSUMER
 					printf("sw ts delta = +"TS_FORMAT"\n", TS_FORMAT_PARAM(ts_now-ts_prev));
 					ts_prev = ts_now;
@@ -133,7 +138,11 @@ void* packet_consumer_thread(void* ) {
 		}
 	}
 
+    quint64 ts_end = get_current_time();
+
 	printf("Total packets received: %llu\n", packetsReceived);
+    printf("Packets received per second: %f pps\n", 1.0e9 * packetsReceived / double(ts_end - tsFirstReceivedPacket));
+    printf("Bits received per second: %f bps\n", 1.0e9 * bytesReceived * 8.0 / double(ts_end - tsFirstReceivedPacket));
 
 	return(NULL);
 }
