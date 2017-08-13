@@ -84,7 +84,10 @@ void* packet_consumer_thread(void* ) {
 		if (do_shutdown)
 			break;
 
-		if (pfring_recv(pd, (char*)p->buffer, sizeof(p->buffer), &hdr, 0) > 0) {
+        quint8 *buffer = p->buffer;
+        quint8 **buffer_ptr = &buffer;
+
+        if (pfring_recv(pd, buffer_ptr, sizeof(p->buffer), &hdr, 0) > 0) {
 			if (do_shutdown)
 				break;
 			if (hdr.caplen != hdr.len) {

@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-my $netdev = "eth5";
+my $netdev = "eth2";
 my $gateway = "192.168.77.2";
 
 sub command {

@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -e
+set -x
 eval "$(/bin/sh ../remote-config.sh)"
 
 PROJECT=line-router
@@ -8,7 +10,7 @@ BUILD_DIR=$PWD
 SRC_DIR=$SVN_DIR/$PROJECT
 REMOTE_USER=$REMOTE_USER_ROUTER
 REMOTE_HOST=$REMOTE_HOST_ROUTER
-REMOTE_DIR=$( [ $REMOTE_USER == "root" ] && echo "/root" || echo "/home/$REMOTE_USER" )
+REMOTE_DIR=/root
 MAKE="qmake $PROJECT.pro -r -spec linux-g++-64 CONFIG+=$BUILD_CONFIG_ROUTER && make -w && make install"
 
 cp $SRC_DIR/deploycore-template.pl $SRC_DIR/deploycore.pl

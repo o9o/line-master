@@ -5,18 +5,18 @@ SVN_DIR="$( cd -P "$( dirname "$0" )" && pwd )"
 ### BEGIN Editable part
 
 REMOTE_USER_ROUTER='root'
-REMOTE_HOST_ROUTER='pc1.yourdomain.com'
+REMOTE_HOST_ROUTER='128.178.52.178'
 REMOTE_DEDICATED_IP_ROUTER='192.168.77.1'
-REMOTE_DEDICATED_IF_ROUTER='eth1'
+REMOTE_DEDICATED_IF_ROUTER='eth2'
 #For debug build keep 'debug' in CONFIG
 #BUILD_CONFIG_ROUTER='debug'
 #For release build just keep an empty string
 BUILD_CONFIG_ROUTER=''
 
 REMOTE_USER_HOSTS='root'
-REMOTE_HOST_HOSTS='pc2.yourdomain.com'
+REMOTE_HOST_HOSTS='128.178.52.179'
 REMOTE_DEDICATED_IP_HOSTS='192.168.77.2'
-REMOTE_DEDICATED_IF_HOSTS='eth1'
+REMOTE_DEDICATED_IF_HOSTS='eth2'
 #For debug build keep 'debug' in CONFIG
 #BUILD_CONFIG_HOSTS='debug'
 #For release build just keep an empty string

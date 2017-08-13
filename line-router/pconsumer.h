@@ -74,7 +74,7 @@ extern QString simulationId;
 #define TS_FORMAT "%llu %3llus %3llum %3lluu %3llun"
 #define TS_FORMAT_PARAM(X) (X)/SEC_TO_NSEC/1000, ((X)/SEC_TO_NSEC)%1000, ((X)/MSEC_TO_NSEC)%1000, ((X)/USEC_TO_NSEC)%1000, (X)%1000
 
-#define DEBUG_PACKETS 0
+#define DEBUG_PACKETS 1
 
 int runPacketFilter(int argc, char **argv);
 

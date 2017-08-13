@@ -216,7 +216,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 						emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(key));
 					}
 
-					if (!ssh.waitForFinished(key, 5)) {
+                    if (!ssh.waitForFinished(key, 1)) {
 						emit logError(ui->txtBatch, QString("Error: %1 wait failed after SIGINT; trying SIGKILL").arg(key));
 					}
 
@@ -224,7 +224,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 						emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(key));
 					}
 
-					if (!ssh.waitForFinished(key, 5)) {
+                    if (!ssh.waitForFinished(key, 1)) {
 						emit logError(ui->txtBatch, QString("Error: %1 wait failed").arg(key));
 					}
 				}
@@ -233,7 +233,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 					emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(c.clientKey));
 				}
 
-				if (!ssh.waitForFinished(c.clientKey, 5)) {
+                if (!ssh.waitForFinished(c.clientKey, 1)) {
 					emit logError(ui->txtBatch, QString("Error: %1 wait failed after SIGINT; trying SIGKILL").arg(c.clientKey));
 				}
 
@@ -241,7 +241,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 					emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(c.clientKey));
 				}
 
-				if (!ssh.waitForFinished(c.clientKey, 5)) {
+                if (!ssh.waitForFinished(c.clientKey, 1)) {
 					emit logError(ui->txtBatch, QString("Error: %1 wait failed").arg(c.clientKey));
 				}
 			}
@@ -252,7 +252,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 						emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(key));
 					}
 
-					if (!ssh.waitForFinished(key, 5)) {
+                    if (!ssh.waitForFinished(key, 1)) {
 						emit logError(ui->txtBatch, QString("Error: %1 wait failed after SIGINT; trying SIGKILL").arg(key));
 					}
 
@@ -260,7 +260,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 						emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(key));
 					}
 
-					if (!ssh.waitForFinished(key, 5)) {
+                    if (!ssh.waitForFinished(key, 1)) {
 						emit logError(ui->txtBatch, QString("Error: %1 wait failed").arg(key));
 					}
 				}
@@ -269,7 +269,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 					emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(c.serverKey));
 				}
 
-				if (!ssh.waitForFinished(c.serverKey, 5)) {
+                if (!ssh.waitForFinished(c.serverKey, 1)) {
 					emit logError(ui->txtBatch, QString("Error: %1 wait failed after SIGINT; trying SIGKILL").arg(c.serverKey));
 				}
 
@@ -277,7 +277,7 @@ QString MainWindow::doGenericSimulation(int timeout)
 					emit logError(ui->txtBatch, QString("Error: %1 signal failed").arg(c.serverKey));
 				}
 
-				if (!ssh.waitForFinished(c.serverKey, 5)) {
+                if (!ssh.waitForFinished(c.serverKey, 1)) {
 					emit logError(ui->txtBatch, QString("Error: %1 wait failed").arg(c.serverKey));
 				}
 			}

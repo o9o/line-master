@@ -95,8 +95,11 @@ void Dialog::startServer() {
 	bytesReceived = 0;
 	mode = "server";
 
-	while (!tcpServer.isListening() && !tcpServer.listen(QHostAddress(serverAddress), serverPort)) {
-		qDebug() << QString("Unable to start the test: %1.").arg(tcpServer.errorString());
+    while (!tcpServer.isListening() && !tcpServer.listen(QHostAddress::Any, serverPort)) {
+        qDebug() << QString("Unable to start server on %1:%2: %3.")
+                    .arg(serverAddress)
+                    .arg(serverPort)
+                    .arg(tcpServer.errorString());
 		exit(1);
 	}
 	qDebug() << QString("Listening on port %1").arg(serverPort);

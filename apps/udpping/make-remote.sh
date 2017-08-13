@@ -7,7 +7,7 @@ BUILD_DIR=$PWD
 SRC_DIR=$SVN_DIR/apps/$PROJECT
 REMOTE_USER=$REMOTE_USER_HOSTS
 REMOTE_HOST=$REMOTE_HOST_HOSTS
-REMOTE_DIR=$( [ $REMOTE_USER == "root" ] && echo "/root" || echo "/home/$REMOTE_USER" )
+REMOTE_DIR=/root
 MAKE="qmake $PROJECT.pro -r -spec linux-g++-64 CONFIG+=$BUILD_CONFIG_HOSTS && make -w && make install"
 
 cd $BUILD_DIR || exit 1

@@ -192,15 +192,18 @@ bool NetGraphEdge::enqueue(Packet *p, quint64 ts_now, quint64 &ts_exit)
 		goto stats;
 	}
 	// we are enqueuing this packet
+    if (DEBUG_PACKETS) printf("Edge: enqueuing packet\n");
 	qload += p->length;
 
 	// add transmission delay
 	qdelay = (qload * SEC_TO_NSEC) / rate_Bps;
+    if (DEBUG_PACKETS) printf("Edge: qdelay = %llu ns\n", qdelay);
 	ts_exit = qts_head + qdelay;
 	total_qdelay += qdelay;
 
 	// add propagation delay
 	ts_exit += delay_ms * MSEC_TO_NSEC;
+    if (DEBUG_PACKETS) printf("Edge: total delay = %llu ns\n", ts_exit - ts_now);
 
 	p->theoretical_delay += ts_exit - ts_now;
 
@@ -611,8 +614,8 @@ void* packet_scheduler_thread(void* )
 				delete p;
 				continue;
 			}
-			quint64 ts_next_event;
-			int pkt_state = routePacket(p, p->ts_driver_rx, ts_next_event);
+            quint64 ts_next_event = ts_now;
+            int pkt_state = routePacket(p, ts_now, ts_next_event);
 			if (pkt_state == PKT_QUEUED) {
 				if (DEBUG_PACKETS) printf("Enqueue: %d.%d.%d.%d -> %d.%d.%d.%d, for time = +%llu ns, edgecount = %d\n", NIPQUAD(p->src_ip), NIPQUAD(p->dst_ip), ts_next_event - ts_now, p->edgecount);
 				eventQueue.insert(p, ts_next_event);
@@ -635,8 +638,8 @@ void* packet_scheduler_thread(void* )
 				Packet *p = event.first;
 				// quint64 ts_event = event.second;
 
-				quint64 ts_next_event;
-				int pkt_state = routePacket(p, event.second, ts_next_event);
+                quint64 ts_next_event = 0;
+                int pkt_state = routePacket(p, event.second, ts_next_event);
 				if (pkt_state == PKT_QUEUED) {
 					if (DEBUG_PACKETS) printf("Enqueue: %d.%d.%d.%d -> %d.%d.%d.%d, for time = +%llu ns, edgecount = %d\n", NIPQUAD(p->src_ip), NIPQUAD(p->dst_ip), ts_next_event - ts_now, p->edgecount);
 					eventQueue.insert(p, ts_next_event);
